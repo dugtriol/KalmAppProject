@@ -19,6 +19,7 @@ public func configure(_ app: Application) async throws {
 
     
     app.migrations.add(CreateWord())
+    app.migrations.add(CreateCategory())
     try await app.autoMigrate().get()
     // register routes
     try routes(app)

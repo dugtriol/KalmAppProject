@@ -4,8 +4,9 @@ import Fluent
 struct WordsController: RouteCollection {
     func boot(routes: Vapor.RoutesBuilder) throws {
         let wordGroup = routes.grouped("words")
-        wordGroup.get(use: getAllHandler(_:))
-        wordGroup.get(":wordID", use: getHandler)
+//        wordGroup.get(use: getAllHandler(_:))
+        wordGroup.get(":categoryID", use: getAllHandlerByCategory)
+//        wordGroup.get(":wordID", use: getHandler)
         wordGroup.post(use: createHandler)
         wordGroup.delete(":wordID", use: deleteHandler)
     }
@@ -34,19 +35,30 @@ struct WordsController: RouteCollection {
 //        return words
 //    }
     
+//    //MARK: CRUD - Retrieve All
+//    func getAllHandler(_ req: Request) async throws -> [Word] {
+//        let words = try await Word.query(on: req.db).all()
+//        return words
+//    }
+    
     //MARK: CRUD - Retrieve All
-    func getAllHandler(_ req: Request) async throws -> [Word] {
-        let words = try await Word.query(on: req.db).all()
+    func getAllHandlerByCategory(_ req: Request) async throws -> [Word] {
+        guard let category = try await Category.find(req.parameters.get("categoryID"), on: req.db) else {
+            throw Abort(.badRequest)
+        }
+        let words = try await Word.query(on: req.db)
+            .filter(\.$category == category.titleRussian)
+            .all()
         return words
     }
     
-    //MARK: CRUD - Retrieve
-    func getHandler(_ req: Request) async throws -> Word {
-        guard let word = try await Word.find(req.parameters.get("wordID"), on: req.db) else {
-            throw Abort(.notFound)
-        }
-        return word
-    }
+//    //MARK: CRUD - Retrieve
+//    func getHandler(_ req: Request) async throws -> Word {
+//        guard let word = try await Word.find(req.parameters.get("wordID"), on: req.db) else {
+//            throw Abort(.notFound)
+//        }
+//        return word
+//    }
     
     //MARK: CRUD - Delete
     func deleteHandler(_ req: Request) async throws -> HTTPStatus {
