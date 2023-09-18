@@ -12,9 +12,17 @@
 		910054282AB739EE004457E2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 910054272AB739EE004457E2 /* Preview Assets.xcassets */; };
 		9100542F2AB73A36004457E2 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9100542E2AB73A36004457E2 /* Word.swift */; };
 		910054322AB73B3B004457E2 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910054312AB73B3B004457E2 /* NetworkService.swift */; };
-		910054362AB7606D004457E2 /* LessonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910054352AB7606D004457E2 /* LessonList.swift */; };
-		910054382AB760AE004457E2 /* LessonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910054372AB760AE004457E2 /* LessonCell.swift */; };
+		910054362AB7606D004457E2 /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910054352AB7606D004457E2 /* CategoryList.swift */; };
+		910054382AB760AE004457E2 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910054372AB760AE004457E2 /* CategoryCell.swift */; };
 		9100543A2AB7724A004457E2 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910054392AB7724A004457E2 /* ModelData.swift */; };
+		913BBA872AB871800073110F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA862AB871800073110F /* Category.swift */; };
+		913BBA892AB87EE90073110F /* WordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA882AB87EE90073110F /* WordList.swift */; };
+		913BBA8B2AB880020073110F /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA8A2AB880020073110F /* WordCell.swift */; };
+		913BBA8F2AB887620073110F /* GameFirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA8E2AB887620073110F /* GameFirstView.swift */; };
+		913BBA912AB88DC10073110F /* GameHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA902AB88DC10073110F /* GameHomeView.swift */; };
+		913BBA952AB8A2550073110F /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA942AB8A2550073110F /* CustomButton.swift */; };
+		913BBA972AB8C77B0073110F /* SelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA962AB8C77B0073110F /* SelectButton.swift */; };
+		913BBA992AB8D0EF0073110F /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA982AB8D0EF0073110F /* View+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,9 +32,17 @@
 		910054272AB739EE004457E2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9100542E2AB73A36004457E2 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		910054312AB73B3B004457E2 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		910054352AB7606D004457E2 /* LessonList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonList.swift; sourceTree = "<group>"; };
-		910054372AB760AE004457E2 /* LessonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCell.swift; sourceTree = "<group>"; };
+		910054352AB7606D004457E2 /* CategoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryList.swift; sourceTree = "<group>"; };
+		910054372AB760AE004457E2 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		910054392AB7724A004457E2 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		913BBA862AB871800073110F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		913BBA882AB87EE90073110F /* WordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordList.swift; sourceTree = "<group>"; };
+		913BBA8A2AB880020073110F /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
+		913BBA8E2AB887620073110F /* GameFirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFirstView.swift; sourceTree = "<group>"; };
+		913BBA902AB88DC10073110F /* GameHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHomeView.swift; sourceTree = "<group>"; };
+		913BBA942AB8A2550073110F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		913BBA962AB8C77B0073110F /* SelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectButton.swift; sourceTree = "<group>"; };
+		913BBA982AB8D0EF0073110F /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +98,7 @@
 			children = (
 				9100542E2AB73A36004457E2 /* Word.swift */,
 				910054392AB7724A004457E2 /* ModelData.swift */,
+				913BBA862AB871800073110F /* Category.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -97,10 +114,49 @@
 		910054342AB76050004457E2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				910054352AB7606D004457E2 /* LessonList.swift */,
-				910054372AB760AE004457E2 /* LessonCell.swift */,
+				913BBA932AB8A2320073110F /* Style */,
+				913BBA8C2AB8871A0073110F /* CategoryView */,
+				913BBA8D2AB887250073110F /* WordView */,
+				913BBA922AB88DC80073110F /* GameView */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		913BBA8C2AB8871A0073110F /* CategoryView */ = {
+			isa = PBXGroup;
+			children = (
+				910054352AB7606D004457E2 /* CategoryList.swift */,
+				910054372AB760AE004457E2 /* CategoryCell.swift */,
+			);
+			path = CategoryView;
+			sourceTree = "<group>";
+		};
+		913BBA8D2AB887250073110F /* WordView */ = {
+			isa = PBXGroup;
+			children = (
+				913BBA882AB87EE90073110F /* WordList.swift */,
+				913BBA8A2AB880020073110F /* WordCell.swift */,
+			);
+			path = WordView;
+			sourceTree = "<group>";
+		};
+		913BBA922AB88DC80073110F /* GameView */ = {
+			isa = PBXGroup;
+			children = (
+				913BBA8E2AB887620073110F /* GameFirstView.swift */,
+				913BBA902AB88DC10073110F /* GameHomeView.swift */,
+			);
+			path = GameView;
+			sourceTree = "<group>";
+		};
+		913BBA932AB8A2320073110F /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				913BBA942AB8A2550073110F /* CustomButton.swift */,
+				913BBA962AB8C77B0073110F /* SelectButton.swift */,
+				913BBA982AB8D0EF0073110F /* View+.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,12 +229,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				910054362AB7606D004457E2 /* LessonList.swift in Sources */,
-				910054382AB760AE004457E2 /* LessonCell.swift in Sources */,
+				910054362AB7606D004457E2 /* CategoryList.swift in Sources */,
+				913BBA892AB87EE90073110F /* WordList.swift in Sources */,
+				910054382AB760AE004457E2 /* CategoryCell.swift in Sources */,
+				913BBA8B2AB880020073110F /* WordCell.swift in Sources */,
+				913BBA992AB8D0EF0073110F /* View+.swift in Sources */,
 				910054212AB739ED004457E2 /* KalmAppFrontApp.swift in Sources */,
 				910054322AB73B3B004457E2 /* NetworkService.swift in Sources */,
 				9100542F2AB73A36004457E2 /* Word.swift in Sources */,
 				9100543A2AB7724A004457E2 /* ModelData.swift in Sources */,
+				913BBA952AB8A2550073110F /* CustomButton.swift in Sources */,
+				913BBA872AB871800073110F /* Category.swift in Sources */,
+				913BBA972AB8C77B0073110F /* SelectButton.swift in Sources */,
+				913BBA8F2AB887620073110F /* GameFirstView.swift in Sources */,
+				913BBA912AB88DC10073110F /* GameHomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

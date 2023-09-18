@@ -12,8 +12,8 @@ class NetworkService {
     private init() {}
     private let localhost = "http://127.0.0.1:8080"
     
-    func getWords() async throws -> [Word] {
-        guard let url = URL(string: "\(localhost)\(APIMethod.auth.rawValue)") else {
+    func getWordsByCategory(id: String) async throws -> [Word] {
+        guard let url = URL(string: "\(localhost)\(APIMethod.words.rawValue)\(id)") else {
             throw NetworkError.badURL
         }
         
@@ -25,10 +25,23 @@ class NetworkService {
         return words
     }
     
+    func getCategories() async throws -> [Category] {
+        guard let url = URL(string: "\(localhost)\(APIMethod.categories.rawValue)") else {
+            throw NetworkError.badURL
+        }
+        
+        let userResponse = try await URLSession.shared.data(for: URLRequest(url: url))
+        let userData = userResponse.0
+        
+        let decoder = JSONDecoder()
+        let categories = try decoder.decode([Category].self, from: userData)
+        return categories
+    }
 }
 
 enum APIMethod: String {
-    case auth = "/words/"
+    case words = "/words/"
+    case categories = "/categories/"
 }
 
 enum NetworkError: Error {

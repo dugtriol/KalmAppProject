@@ -13,7 +13,7 @@ struct KalmAppFrontApp: App {
     
     var body: some Scene {
         WindowGroup {
-            LessonList()
+            CategoryList()
                 .environmentObject(modelData)
         }
     }

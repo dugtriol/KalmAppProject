@@ -1,20 +1,23 @@
-//
-//  StandartButton.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 18.09.2023.
-//
-
 import SwiftUI
 
-struct StandartButton: View {
+struct SelectButton: View {
+    @Binding var isSelected: Bool
+    @State var color: Color
+    @State var text: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Capsule()
+                .frame( height: 50)
+                .foregroundColor(isSelected ? color : Color.orange.opacity(0.4))
+            Text(text)
+                .foregroundColor(.white)
+        }
     }
 }
 
-struct StandartButton_Previews: PreviewProvider {
+struct SelectButton_Previews: PreviewProvider {
     static var previews: some View {
-        StandartButton()
+        SelectButton(isSelected: .constant(false),color: .blue, text: "Press me")
     }
 }

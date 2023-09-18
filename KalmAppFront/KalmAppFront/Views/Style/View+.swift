@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct View_: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+extension View {
+    func hAllign(_ alignment: Alignment) -> some View {
+        self
+            .frame(maxWidth: .infinity, alignment: alignment)
     }
-}
-
-struct View__Previews: PreviewProvider {
-    static var previews: some View {
-        View_()
+    
+    func vAllign(_ alignment: Alignment) -> some View {
+        self
+            .frame(maxHeight: .infinity, alignment: alignment)
     }
 }

@@ -8,13 +8,35 @@
 import SwiftUI
 
 struct GameHomeView: View {
+    
+    @EnvironmentObject private var modelData: ModelData
+    var categoryID: String
+    @State private var startQuizz: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Button {
+                startQuizz.toggle()
+            } label: {
+                Text("Упражнение")
+            }
+        }
+        .fullScreenCover(isPresented: $startQuizz) {
+            GameFirstView(words: modelData.words)
+        }
+        .task {
+            do {
+                try await modelData.fetchWordsByCaetgory(id: categoryID)
+            } catch {
+                print("error LessonList")
+            }
+        }
     }
 }
 
 struct GameHomeView_Previews: PreviewProvider {
     static var previews: some View {
-        GameHomeView()
+        GameHomeView(categoryID: "5339a41e-dcd5-4167-87da-edf609a03124")
+            .environmentObject(ModelData())
     }
 }

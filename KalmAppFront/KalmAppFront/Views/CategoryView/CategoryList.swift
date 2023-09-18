@@ -10,18 +10,22 @@ import SwiftUI
 struct CategoryList: View {
     @EnvironmentObject private var modelData: ModelData
     var body: some View {
-        NavigationView {
-            List {
-                ForEach (modelData.categories, id: \.self) {
-                    category in NavigationLink {
-                        WordList(category: category)
-                    } label: {
-                        CategoryCell(category: category)
-                    }
+        NavigationStack {
+//            List {
+//                ForEach (modelData.categories, id: \.self) {
+//                    category in NavigationLink {
+//                        GameHomeView(categoryID: category.id)
+//                    } label: {
+//                        CategoryCell(category: category)
+//                    }
+//                }
+            List (modelData.categories, id: \.id) { category in
+                NavigationLink(value: category) {
+                    CategoryCell(category: category)
                 }
             }
             .navigationDestination(for: Category.self, destination: { category in
-                WordList(category: category)
+                GameHomeView(categoryID: category.id)
             })
         }
         .navigationTitle("categories")
