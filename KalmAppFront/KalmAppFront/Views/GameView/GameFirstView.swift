@@ -13,6 +13,9 @@ struct GameFirstView: View {
     @State private var score: CGFloat = 0
     private let countOfQuestions: Int = 10
     @State private var showScoreCard: Bool = false
+    @State private var questionText: String = ""
+    @State private var optionText: String = ""
+    @State private var method: Int = 0
     
     var words: [Word]
     @State var question: Question
@@ -56,10 +59,13 @@ struct GameFirstView: View {
             GeometryReader { _ in
                 //self.question = makeQuestion()
                 ForEach(0..<countOfQuestions) { index in
-                    QuestionView(question)
-                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                    if currentIndex == index {
+                        QuestionView(question, method)
+//                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                    }
                 }
             }
+            
             .padding(.horizontal, -15)
             .padding(.vertical, 15)
             
@@ -69,12 +75,13 @@ struct GameFirstView: View {
                     /// - Presenting Score Card View
                     showScoreCard.toggle()
                 } else {
-                    withAnimation(.easeInOut) {
+                    withAnimation(.default) {
                         self.question = makeQuestion(self.words)
                         currentIndex += 1
                         progress = CGFloat(currentIndex) / CGFloat(countOfQuestions - 1)
                     }
                 }
+                method = currentIndex % 3
             })
             .disabled(question.tappedAnswer == "")
         }
@@ -89,20 +96,19 @@ struct GameFirstView: View {
             ScoreCardView(score: score / CGFloat(countOfQuestions) * 100) {
                 /// - Closing View
                 dismiss()
-                print("\(score) \(countOfQuestions)")
             }
         }
     }
     
     
     @ViewBuilder
-    func QuestionView(_ question: Question) -> some View{
+    func QuestionView(_ question: Question, _ method: Int) -> some View{
         VStack(alignment: .leading, spacing: 15) {
-            //            Text("Question \(currentIndex + 1)/\(10)")
-            //                .font(.callout)
-            //                .foregroundColor(.black)
-            //                .hAllign(.leading)
-            Text(question.question.kalmyk)
+            Text("Question \(currentIndex + 1)/\(countOfQuestions)")
+                .font(.callout)
+                .foregroundColor(.black)
+                .hAllign(.leading)
+            Text(method == 0 ? question.question.russian : question.question.kalmyk)
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(.black)
@@ -110,13 +116,14 @@ struct GameFirstView: View {
                 ForEach(question.options, id: \.self) { option in
                     /// Displaying Correct and Wrong answers  after user has tapped any one of the options
                     ZStack {
-                        OptionView(option, .gray)
+                        OptionView(option, .gray, method == 0 ? 0 : method == 1 ? 1 : 2)
                             .opacity(question.question.id == option.id && question.tappedAnswer != "" ? 0 : 1)
-                        OptionView(option, .green)
+                        OptionView(option, .green, method == 0 ? 0 : method == 1 ? 1 : 2)
                             .opacity(question.question.id == option.id && question.tappedAnswer != "" ? 1 : 0)
-                        OptionView(option, .red)
+                        OptionView(option, .red, method == 0 ? 0 : method == 1 ? 1 : 2)
                             .opacity(question.tappedAnswer == option.id && question.tappedAnswer != question.question.id ? 1 : 0)
                     }
+//                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                     .contentShape(Rectangle())
                     .onTapGesture {
                         /// Disabling Tap if Already Answer was selected
@@ -140,21 +147,38 @@ struct GameFirstView: View {
     }
     
     @ViewBuilder
-    func OptionView(_ option: Word, _ tint: Color) -> some View {
-        Text(option.russian)
-            .foregroundColor(tint)
-            .padding(.horizontal, 15)
-            .padding(.vertical, 20)
-            .hAllign(.leading)
-            .background {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(tint.opacity(0.15))
-                    .background{
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(tint.opacity(tint == .gray ? 0.15 : 1), lineWidth: 2)
-                    }
-            }
-        
+    func OptionView(_ option: Word, _ tint: Color, _ method: Int) -> some View {
+        if method == 2 {
+            AsyncImage(url: URL(string: option.image), scale: 20)
+            //.resizable()
+                .frame(width: 100, height: 100)
+                .aspectRatio(contentMode: .fill)
+                .clipShape(Rectangle())
+                .hAllign(.center)
+                .background{
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(tint.opacity(0.15))
+                        .background{
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .stroke(tint.opacity(tint == .gray ? 0.15 : 1), lineWidth: 2)
+                        }
+                }
+        }
+            else {
+            Text(method == 0 ? option.kalmyk : option.russian)
+                .foregroundColor(tint)
+                .padding(.horizontal, 15)
+                .padding(.vertical, 20)
+                .hAllign(.leading)
+                .background {
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(tint.opacity(0.15))
+                        .background{
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .stroke(tint.opacity(tint == .gray ? 0.15 : 1), lineWidth: 2)
+                        }
+                }
+        }
     }
 }
 

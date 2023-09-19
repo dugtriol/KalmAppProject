@@ -5,7 +5,7 @@ struct Word: Identifiable, Codable, Hashable {
     var russian: String
     var kalmyk: String
     var category: String
-    var image: String?
+    var image: String
 }
 //
 //enum Category: String, CaseIterable {
