@@ -12,4 +12,5 @@ final class ModelData: ObservableObject {
     func fetchCategories() async throws {
         categories = try await NetworkService.shared.getCategories()
     }
+    
 }

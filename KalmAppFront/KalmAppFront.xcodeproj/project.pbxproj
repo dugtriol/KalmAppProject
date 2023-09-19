@@ -23,6 +23,8 @@
 		913BBA952AB8A2550073110F /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA942AB8A2550073110F /* CustomButton.swift */; };
 		913BBA972AB8C77B0073110F /* SelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA962AB8C77B0073110F /* SelectButton.swift */; };
 		913BBA992AB8D0EF0073110F /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA982AB8D0EF0073110F /* View+.swift */; };
+		913BBA9B2AB984780073110F /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA9A2AB984780073110F /* GameModel.swift */; };
+		913BBA9D2AB993E70073110F /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA9C2AB993E70073110F /* Question.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		913BBA942AB8A2550073110F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		913BBA962AB8C77B0073110F /* SelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectButton.swift; sourceTree = "<group>"; };
 		913BBA982AB8D0EF0073110F /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		913BBA9A2AB984780073110F /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		913BBA9C2AB993E70073110F /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 				9100542E2AB73A36004457E2 /* Word.swift */,
 				910054392AB7724A004457E2 /* ModelData.swift */,
 				913BBA862AB871800073110F /* Category.swift */,
+				913BBA9C2AB993E70073110F /* Question.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -145,6 +150,7 @@
 			children = (
 				913BBA8E2AB887620073110F /* GameFirstView.swift */,
 				913BBA902AB88DC10073110F /* GameHomeView.swift */,
+				913BBA9A2AB984780073110F /* GameModel.swift */,
 			);
 			path = GameView;
 			sourceTree = "<group>";
@@ -230,10 +236,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				910054362AB7606D004457E2 /* CategoryList.swift in Sources */,
+				913BBA9D2AB993E70073110F /* Question.swift in Sources */,
 				913BBA892AB87EE90073110F /* WordList.swift in Sources */,
 				910054382AB760AE004457E2 /* CategoryCell.swift in Sources */,
 				913BBA8B2AB880020073110F /* WordCell.swift in Sources */,
 				913BBA992AB8D0EF0073110F /* View+.swift in Sources */,
+				913BBA9B2AB984780073110F /* GameModel.swift in Sources */,
 				910054212AB739ED004457E2 /* KalmAppFrontApp.swift in Sources */,
 				910054322AB73B3B004457E2 /* NetworkService.swift in Sources */,
 				9100542F2AB73A36004457E2 /* Word.swift in Sources */,

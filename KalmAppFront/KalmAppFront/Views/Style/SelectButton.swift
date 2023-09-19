@@ -1,23 +1,33 @@
 import SwiftUI
 
 struct SelectButton: View {
-    @Binding var isSelected: Bool
-    @State var color: Color
-    @State var text: String
+    var title: String
+    var onClick: () -> ()
     
     var body: some View {
-        ZStack {
-            Capsule()
-                .frame( height: 50)
-                .foregroundColor(isSelected ? color : Color.orange.opacity(0.4))
-            Text(text)
+        Button {
+            onClick()
+        } label: {
+            Text(title)
+                .font(.title3)
+                .fontWeight(.semibold)
+                .hAllign(.center)
+                .padding(.top, 15)
+                .padding(.bottom, 10)
                 .foregroundColor(.white)
+                .background{
+                    Rectangle()
+                        .fill(Color(.systemPink))
+                        .ignoresSafeArea()
+                }
         }
+        .padding([.bottom, .horizontal], -15)
+        //.vAllign(.bottom)
     }
 }
 
 struct SelectButton_Previews: PreviewProvider {
     static var previews: some View {
-        SelectButton(isSelected: .constant(false),color: .blue, text: "Press me")
+        SelectButton(title: "Press me", onClick: {print("SelectButton")})
     }
 }

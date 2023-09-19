@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GameHomeView: View {
-    
     @EnvironmentObject private var modelData: ModelData
     var categoryID: String
     @State private var startQuizz: Bool = false
