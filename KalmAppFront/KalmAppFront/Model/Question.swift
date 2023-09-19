@@ -8,21 +8,32 @@
 import SwiftUI
 
 struct Question {
-    var question: String
-    var options: [String]
-    var answer: String
-    
+    var question: Word
+    var options: [Word]
     var tappedAnswer: String = ""
+    
     init() {
-        self.question = "q"
-        self.answer = ""
+        let word = Word(id: "", russian: "", kalmyk: "", category: "")
+        self.question = word
         self.options = []
     }
-    init(question: String, options: [String], answer: String, tappedAnswer: String = "") {
+    init(question: Word, options: [Word], tappedAnswer: String = "") {
         self.question = question
         self.options = options
-        self.answer = answer
         self.tappedAnswer = tappedAnswer
     }
+}
+
+func makeQuestion(_ words: [Word]) -> Question {
+    let correctAnswer = Int.random(in: 0...words.count - 1)
+    var ans1: Int
+    var ans2: Int
+    repeat {
+        ans1 = Int.random(in: 0...words.count - 1)
+        ans2 = Int.random(in: 0...words.count - 1)
+    } while (ans1 == ans2 || ans1 == correctAnswer || ans2 == correctAnswer)
     
+    var array = [correctAnswer, ans1, ans2]
+    array.shuffle()
+    return Question(question: words[correctAnswer], options: [words[array[0]], words[array[1]], words[array[2]]])
 }

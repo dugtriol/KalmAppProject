@@ -25,6 +25,7 @@
 		913BBA992AB8D0EF0073110F /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA982AB8D0EF0073110F /* View+.swift */; };
 		913BBA9B2AB984780073110F /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA9A2AB984780073110F /* GameModel.swift */; };
 		913BBA9D2AB993E70073110F /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA9C2AB993E70073110F /* Question.swift */; };
+		913BBA9F2ABA25330073110F /* ScoreCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA9E2ABA25330073110F /* ScoreCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		913BBA982AB8D0EF0073110F /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		913BBA9A2AB984780073110F /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		913BBA9C2AB993E70073110F /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		913BBA9E2ABA25330073110F /* ScoreCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				913BBA8E2AB887620073110F /* GameFirstView.swift */,
 				913BBA902AB88DC10073110F /* GameHomeView.swift */,
 				913BBA9A2AB984780073110F /* GameModel.swift */,
+				913BBA9E2ABA25330073110F /* ScoreCardView.swift */,
 			);
 			path = GameView;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				9100542F2AB73A36004457E2 /* Word.swift in Sources */,
 				9100543A2AB7724A004457E2 /* ModelData.swift in Sources */,
 				913BBA952AB8A2550073110F /* CustomButton.swift in Sources */,
+				913BBA9F2ABA25330073110F /* ScoreCardView.swift in Sources */,
 				913BBA872AB871800073110F /* Category.swift in Sources */,
 				913BBA972AB8C77B0073110F /* SelectButton.swift in Sources */,
 				913BBA8F2AB887620073110F /* GameFirstView.swift in Sources */,

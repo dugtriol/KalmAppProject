@@ -8,29 +8,19 @@
 import SwiftUI
 
 struct GameFirstView: View {
-    //var gameModel: GameModel
     @State private var progress: CGFloat = 0.0
-    var words: [Word] = []
-    @State var question: Question = Question(question: "mother", options: ["motherk", "fatherk", "sisterk"], answer: "motherk")
+    @State private var currentIndex: Int = 0
+    @State private var score: CGFloat = 0
+    private let countOfQuestions: Int = 10
+    @State private var showScoreCard: Bool = false
     
+    var words: [Word]
+    @State var question: Question
     
     init(words: [Word]) {
         self.words = words
         self.words.shuffle()
-    }
-    
-    func makeQuestion() -> Question {
-        let correctAnswer = Int.random(in: 0...self.words.count - 1)
-        var ans1: Int
-        var ans2: Int
-        repeat {
-            ans1 = Int.random(in: 0...self.words.count - 1)
-            ans2 = Int.random(in: 0...self.words.count - 1)
-        } while (ans1 == ans2 || ans1 == correctAnswer || ans2 == correctAnswer)
-        
-        var array = [correctAnswer, ans1, ans2]
-        array.shuffle()
-        return Question(question: words[correctAnswer].russian, options: [words[array[0]].kalmyk, words[array[1]].kalmyk, words[array[2]].kalmyk], answer: words[correctAnswer].kalmyk)
+        _question = State(initialValue: makeQuestion(self.words))
     }
     
     /// - View Properties
@@ -64,24 +54,43 @@ struct GameFirstView: View {
             
             /// Questions
             GeometryReader { _ in
-                ForEach(0..<10) { index in
+                //self.question = makeQuestion()
+                ForEach(0..<countOfQuestions) { index in
                     QuestionView(question)
+                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 }
             }
             .padding(.horizontal, -15)
             .padding(.vertical, 15)
             
-            SelectButton(title: "Next Question", onClick: {
-                withAnimation(.easeInOut) {
-                    self.question = makeQuestion()
+            /// - Changing Button to Finish When the Last Question Arrived
+            SelectButton(title: currentIndex == (countOfQuestions - 1) ? "Finish" : "Next Question", onClick: {
+                if currentIndex == (countOfQuestions - 1) {
+                    /// - Presenting Score Card View
+                    showScoreCard.toggle()
+                } else {
+                    withAnimation(.easeInOut) {
+                        self.question = makeQuestion(self.words)
+                        currentIndex += 1
+                        progress = CGFloat(currentIndex) / CGFloat(countOfQuestions - 1)
+                    }
                 }
             })
+            .disabled(question.tappedAnswer == "")
         }
         .padding(15)
         .hAllign(.center).vAllign(.top)
         .background {
             Color(.gray)
                 .ignoresSafeArea()
+        }
+        .fullScreenCover(isPresented: $showScoreCard) {
+            /// - Displaying in 100%
+            ScoreCardView(score: score / CGFloat(countOfQuestions) * 100) {
+                /// - Closing View
+                dismiss()
+                print("\(score) \(countOfQuestions)")
+            }
         }
     }
     
@@ -93,7 +102,7 @@ struct GameFirstView: View {
             //                .font(.callout)
             //                .foregroundColor(.black)
             //                .hAllign(.leading)
-            Text(question.question)
+            Text(question.question.kalmyk)
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundColor(.black)
@@ -102,17 +111,20 @@ struct GameFirstView: View {
                     /// Displaying Correct and Wrong answers  after user has tapped any one of the options
                     ZStack {
                         OptionView(option, .gray)
-                            .opacity(question.answer == option && question.tappedAnswer != "" ? 0 : 1)
+                            .opacity(question.question.id == option.id && question.tappedAnswer != "" ? 0 : 1)
                         OptionView(option, .green)
-                            .opacity(question.answer == option && question.tappedAnswer != "" ? 1 : 0)
+                            .opacity(question.question.id == option.id && question.tappedAnswer != "" ? 1 : 0)
                         OptionView(option, .red)
-                            .opacity(question.tappedAnswer == option && question.tappedAnswer != question.answer ? 1 : 0)
+                            .opacity(question.tappedAnswer == option.id && question.tappedAnswer != question.question.id ? 1 : 0)
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
                         /// Disabling Tap if Already Answer was selected
                         guard question.tappedAnswer == "" else {return}
-                        self.question.tappedAnswer = option
+                        self.question.tappedAnswer = option.id
+                        if self.question.question.id == self.question.tappedAnswer {
+                            score += 1.0
+                        }
                     }
                 }
             }
@@ -128,8 +140,8 @@ struct GameFirstView: View {
     }
     
     @ViewBuilder
-    func OptionView(_ option: String, _ tint: Color) -> some View {
-        Text(option)
+    func OptionView(_ option: Word, _ tint: Color) -> some View {
+        Text(option.russian)
             .foregroundColor(tint)
             .padding(.horizontal, 15)
             .padding(.vertical, 20)
