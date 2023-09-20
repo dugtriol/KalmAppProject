@@ -23,7 +23,7 @@ struct GameFirstView: View {
     init(words: [Word]) {
         self.words = words
         self.words.shuffle()
-        _question = State(initialValue: makeQuestion(self.words))
+        _question = State(initialValue: makeQuestion(self.words, 4))
     }
     
     /// - View Properties
@@ -57,11 +57,9 @@ struct GameFirstView: View {
             
             /// Questions
             GeometryReader { _ in
-                //self.question = makeQuestion()
                 ForEach(0..<countOfQuestions) { index in
                     if currentIndex == index {
                         QuestionView(question, method)
-//                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                     }
                 }
             }
@@ -76,7 +74,7 @@ struct GameFirstView: View {
                     showScoreCard.toggle()
                 } else {
                     withAnimation(.default) {
-                        self.question = makeQuestion(self.words)
+                        self.question = makeQuestion(self.words, 4)
                         currentIndex += 1
                         progress = CGFloat(currentIndex) / CGFloat(countOfQuestions - 1)
                     }
@@ -123,7 +121,6 @@ struct GameFirstView: View {
                         OptionView(option, .red, method == 0 ? 0 : method == 1 ? 1 : 2)
                             .opacity(question.tappedAnswer == option.id && question.tappedAnswer != question.question.id ? 1 : 0)
                     }
-//                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                     .contentShape(Rectangle())
                     .onTapGesture {
                         /// Disabling Tap if Already Answer was selected
@@ -173,7 +170,7 @@ struct GameFirstView: View {
                 .background {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .fill(tint.opacity(0.15))
-                        .background{
+                        .background {
                             RoundedRectangle(cornerRadius: 12, style: .continuous)
                                 .stroke(tint.opacity(tint == .gray ? 0.15 : 1), lineWidth: 2)
                         }
@@ -184,7 +181,7 @@ struct GameFirstView: View {
 
 struct GameFirstView_Previews: PreviewProvider {
     static var previews: some View {
-        GameHomeView(categoryID: "5339a41e-dcd5-4167-87da-edf609a03124")
+        CategoryList()
             .environmentObject(ModelData())
     }
 }

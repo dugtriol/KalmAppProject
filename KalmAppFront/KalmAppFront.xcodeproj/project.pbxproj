@@ -26,6 +26,13 @@
 		913BBA9B2AB984780073110F /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA9A2AB984780073110F /* GameModel.swift */; };
 		913BBA9D2AB993E70073110F /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA9C2AB993E70073110F /* Question.swift */; };
 		913BBA9F2ABA25330073110F /* ScoreCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913BBA9E2ABA25330073110F /* ScoreCardView.swift */; };
+		916C83382ABAC420000CC4A4 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916C83372ABAC420000CC4A4 /* DictionaryView.swift */; };
+		916C833A2ABAD3C5000CC4A4 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916C83392ABAD3C5000CC4A4 /* RoundedCorner.swift */; };
+		916C833D2ABB6968000CC4A4 /* WelcomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916C833C2ABB6968000CC4A4 /* WelcomeScreenView.swift */; };
+		916C833F2ABB6986000CC4A4 /* SignInScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916C833E2ABB6986000CC4A4 /* SignInScreenView.swift */; };
+		916C83412ABB69CA000CC4A4 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916C83402ABB69CA000CC4A4 /* PrimaryButton.swift */; };
+		916C83432ABB76FF000CC4A4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916C83422ABB76FF000CC4A4 /* User.swift */; };
+		916C83472ABB798E000CC4A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916C83462ABB798E000CC4A4 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +56,13 @@
 		913BBA9A2AB984780073110F /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		913BBA9C2AB993E70073110F /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		913BBA9E2ABA25330073110F /* ScoreCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardView.swift; sourceTree = "<group>"; };
+		916C83372ABAC420000CC4A4 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
+		916C83392ABAD3C5000CC4A4 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		916C833C2ABB6968000CC4A4 /* WelcomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenView.swift; sourceTree = "<group>"; };
+		916C833E2ABB6986000CC4A4 /* SignInScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInScreenView.swift; sourceTree = "<group>"; };
+		916C83402ABB69CA000CC4A4 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		916C83422ABB76FF000CC4A4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		916C83462ABB798E000CC4A4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +120,7 @@
 				910054392AB7724A004457E2 /* ModelData.swift */,
 				913BBA862AB871800073110F /* Category.swift */,
 				913BBA9C2AB993E70073110F /* Question.swift */,
+				916C83422ABB76FF000CC4A4 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -121,10 +136,12 @@
 		910054342AB76050004457E2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				916C833B2ABB6923000CC4A4 /* AuthViews */,
 				913BBA932AB8A2320073110F /* Style */,
 				913BBA8C2AB8871A0073110F /* CategoryView */,
 				913BBA8D2AB887250073110F /* WordView */,
 				913BBA922AB88DC80073110F /* GameView */,
+				916C83462ABB798E000CC4A4 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -154,6 +171,7 @@
 				913BBA902AB88DC10073110F /* GameHomeView.swift */,
 				913BBA9A2AB984780073110F /* GameModel.swift */,
 				913BBA9E2ABA25330073110F /* ScoreCardView.swift */,
+				916C83372ABAC420000CC4A4 /* DictionaryView.swift */,
 			);
 			path = GameView;
 			sourceTree = "<group>";
@@ -164,8 +182,19 @@
 				913BBA942AB8A2550073110F /* CustomButton.swift */,
 				913BBA962AB8C77B0073110F /* SelectButton.swift */,
 				913BBA982AB8D0EF0073110F /* View+.swift */,
+				916C83392ABAD3C5000CC4A4 /* RoundedCorner.swift */,
+				916C83402ABB69CA000CC4A4 /* PrimaryButton.swift */,
 			);
 			path = Style;
+			sourceTree = "<group>";
+		};
+		916C833B2ABB6923000CC4A4 /* AuthViews */ = {
+			isa = PBXGroup;
+			children = (
+				916C833C2ABB6968000CC4A4 /* WelcomeScreenView.swift */,
+				916C833E2ABB6986000CC4A4 /* SignInScreenView.swift */,
+			);
+			name = AuthViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +268,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				910054362AB7606D004457E2 /* CategoryList.swift in Sources */,
+				916C833D2ABB6968000CC4A4 /* WelcomeScreenView.swift in Sources */,
+				916C83472ABB798E000CC4A4 /* ContentView.swift in Sources */,
 				913BBA9D2AB993E70073110F /* Question.swift in Sources */,
 				913BBA892AB87EE90073110F /* WordList.swift in Sources */,
 				910054382AB760AE004457E2 /* CategoryCell.swift in Sources */,
@@ -249,12 +280,17 @@
 				910054322AB73B3B004457E2 /* NetworkService.swift in Sources */,
 				9100542F2AB73A36004457E2 /* Word.swift in Sources */,
 				9100543A2AB7724A004457E2 /* ModelData.swift in Sources */,
+				916C83412ABB69CA000CC4A4 /* PrimaryButton.swift in Sources */,
 				913BBA952AB8A2550073110F /* CustomButton.swift in Sources */,
+				916C833F2ABB6986000CC4A4 /* SignInScreenView.swift in Sources */,
 				913BBA9F2ABA25330073110F /* ScoreCardView.swift in Sources */,
 				913BBA872AB871800073110F /* Category.swift in Sources */,
 				913BBA972AB8C77B0073110F /* SelectButton.swift in Sources */,
 				913BBA8F2AB887620073110F /* GameFirstView.swift in Sources */,
+				916C83382ABAC420000CC4A4 /* DictionaryView.swift in Sources */,
+				916C833A2ABAD3C5000CC4A4 /* RoundedCorner.swift in Sources */,
 				913BBA912AB88DC10073110F /* GameHomeView.swift in Sources */,
+				916C83432ABB76FF000CC4A4 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
