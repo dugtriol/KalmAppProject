@@ -11,7 +11,7 @@ struct GameFirstView: View {
     @State var name: String = "Lesson_1"
     @State private var progress: CGFloat = 0.0
     @State private var currentIndex: Int = 0
-    @State private var score: CGFloat = 0
+    @State private var score: Int = 0
     private let countOfQuestions: Int = 10
     @State private var showScoreCard: Bool = false
     @State private var method: Int = 0
@@ -28,92 +28,92 @@ struct GameFirstView: View {
     /// - View Properties
     @Environment(\.dismiss) private var dismiss
     var body: some View {
-        VStack(spacing: 15) {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-            }
-            .hAllign(.leading)
-            
-            /// - Progress Bar
-            GeometryReader {
-                let size = $0.size
-                ZStack(alignment: .leading) {
-                    Rectangle()
-                        .fill(.black.opacity(0.2))
-                    Rectangle()
-                        .fill(Color(.blue))
-                        .frame(width: progress*size.width, alignment: .leading)
+        ZStack {
+            Color("BgColor").edgesIgnoringSafeArea(.all)
+            VStack(spacing: 15) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color("PrimaryColor"))
                 }
-                .clipShape(Capsule())
-            }
-            .frame(height: 20)
-            .padding(.top, 5)
-            
-            /// Questions
-            GeometryReader { _ in
-                ForEach(0..<countOfQuestions) { index in
-                    if currentIndex == index {
-                        QuestionView(question, method)
+                .hAllign(.leading)
+                
+                /// - Progress Bar
+                GeometryReader {
+                    let size = $0.size
+                    ZStack(alignment: .leading) {
+                        Rectangle()
+                            .fill(Color("TitleTextColor").opacity(0.2))
+                        Rectangle()
+                            .fill(Color("PrimaryColor"))
+                            .frame(width: progress*size.width, alignment: .leading)
+                    }
+                    .clipShape(Capsule())
+                }
+                .frame(height: 20)
+                .padding(.top, 5)
+                
+                /// Questions
+                GeometryReader { _ in
+                    ForEach(0..<countOfQuestions) { index in
+                        if currentIndex == index {
+                            QuestionView(question, method)
+                        }
                     }
                 }
-            }
-            
-            .padding(.horizontal, -15)
-            .padding(.vertical, 15)
-            
-            /// - Changing Button to Finish When the Last Question Arrived
-            SelectButton(title: currentIndex == (countOfQuestions - 1) ? "Finish" : "Next Question", onClick: {
-                if currentIndex == (countOfQuestions - 1) {
-                    /// - Presenting Score Card View
-                    showScoreCard.toggle()
-                } else {
-                    withAnimation(.default) {
-                        self.question = makeQuestion(self.words, 4)
-                        currentIndex += 1
-                        progress = CGFloat(currentIndex) / CGFloat(countOfQuestions - 1)
+                
+                .padding(.horizontal, -15)
+                .padding(.vertical, 15)
+                
+                /// - Changing Button to Finish When the Last Question Arrived
+                SelectButton(title: currentIndex == (countOfQuestions - 1) ? "Завершить" : "Следующий вопрос", onClick: {
+                    if currentIndex == (countOfQuestions - 1) {
+                        /// - Presenting Score Card View
+                        showScoreCard.toggle()
+                    } else {
+                        withAnimation(.default) {
+                            self.question = makeQuestion(self.words, 4)
+                            currentIndex += 1
+                            progress = CGFloat(currentIndex) / CGFloat(countOfQuestions - 1)
+                        }
                     }
+                    method = currentIndex % 3
+                })
+                .disabled(question.tappedAnswer == "")
+            }
+            .padding(15)
+            .hAllign(.center).vAllign(.top)
+            .fullScreenCover(isPresented: $showScoreCard) {
+                /// - Displaying in 100%
+                ScoreCardView(score: score, countOfQuestions: countOfQuestions) {
+                    /// - Closing View
+                    dismiss()
                 }
-                method = currentIndex % 3
-            })
-            .disabled(question.tappedAnswer == "")
-        }
-        .padding(15)
-        .hAllign(.center).vAllign(.top)
-        .background {
-            Color(.gray)
-                .ignoresSafeArea()
-        }
-        .fullScreenCover(isPresented: $showScoreCard) {
-            /// - Displaying in 100%
-            ScoreCardView(score: score / CGFloat(countOfQuestions) * 100) {
-                /// - Closing View
-                dismiss()
             }
         }
     }
     
     
     @ViewBuilder
-    func QuestionView(_ question: Question, _ method: Int) -> some View{
+    func QuestionView(_ question: Question, _ method: Int) -> some View {
         VStack(alignment: .leading, spacing: 15) {
-            Text("Question \(currentIndex + 1)/\(countOfQuestions)")
+            Text("Вопрос \(currentIndex + 1)/\(countOfQuestions)")
                 .font(.callout)
-                .foregroundColor(.black)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
                 .hAllign(.leading)
             Text(method == 0 ? question.question.russian : question.question.kalmyk)
                 .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundColor(.black)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
             VStack(spacing: 12) {
                 ForEach(question.options, id: \.self) { option in
                     /// Displaying Correct and Wrong answers  after user has tapped any one of the options
                     ZStack {
-                        OptionView(option, .gray, method == 0 ? 0 : method == 1 ? 1 : 2)
+                        OptionView(option, .white, method == 0 ? 0 : method == 1 ? 1 : 2)
                             .opacity(question.question.id == option.id && question.tappedAnswer != "" ? 0 : 1)
                         OptionView(option, .green, method == 0 ? 0 : method == 1 ? 1 : 2)
                             .opacity(question.question.id == option.id && question.tappedAnswer != "" ? 1 : 0)
@@ -126,7 +126,7 @@ struct GameFirstView: View {
                         guard question.tappedAnswer == "" else {return}
                         self.question.tappedAnswer = option.id
                         if self.question.question.id == self.question.tappedAnswer {
-                            score += 1.0
+                            score += 1
                         }
                     }
                 }
@@ -137,7 +137,7 @@ struct GameFirstView: View {
         .hAllign(.center)
         .background{
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(.white)
+                .fill(Color("PrimaryColor")).opacity(0.8)
         }
         .padding(.horizontal, 15)
     }
@@ -153,25 +153,25 @@ struct GameFirstView: View {
                 .hAllign(.center)
                 .background{
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(tint.opacity(0.15))
+                        .fill(tint.opacity(0.55))
                         .background{
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .stroke(tint.opacity(tint == .gray ? 0.15 : 1), lineWidth: 2)
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .stroke(tint.opacity(tint == .white ? 0.85 : 1), lineWidth: 2)
                         }
                 }
         }
             else {
             Text(method == 0 ? option.kalmyk : option.russian)
-                .foregroundColor(tint)
+                    .foregroundColor(.white)
                 .padding(.horizontal, 15)
                 .padding(.vertical, 20)
                 .hAllign(.leading)
                 .background {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(tint.opacity(0.15))
+                        .fill(tint.opacity(0.45))
                         .background {
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .stroke(tint.opacity(tint == .gray ? 0.15 : 1), lineWidth: 2)
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .stroke(tint.opacity(tint == .white ? 0.85 : 1), lineWidth: 2)
                         }
                 }
         }
@@ -180,7 +180,6 @@ struct GameFirstView: View {
 
 struct GameFirstView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryList()
-            .environmentObject(ModelData())
+        ContentView()
     }
 }

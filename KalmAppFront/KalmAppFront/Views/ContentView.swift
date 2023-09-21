@@ -19,11 +19,13 @@ struct ContentView: View {
                 .navigationDestination(isPresented: $showSignUp) {
                     SignUpView(showSignUp: $showSignUp, showCategoryList: $showCategoryList, user: $user)
                 }
+            
         }
         .fullScreenCover(isPresented: $showCategoryList, content: {
-            CategoryList()
+            CategoryList(user: $user)
                 .environmentObject(modelData)
         })
+        .accentColor(Color("PrimaryColor"))
     }
 }
 

@@ -23,7 +23,7 @@ struct SignUpView: View {
                 
                 VStack {
                     Spacer()
-                    Text("Sign Up")
+                    Text("Регистрация")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.bottom, 30)
@@ -32,7 +32,7 @@ struct SignUpView: View {
                         HStack {
                             Image(systemName: "face.smiling")
                                 .font(.title2)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("PrimaryColor"))
                                 .frame(width: 40)
                             TextField("Имя", text: $name)
                         }
@@ -42,7 +42,7 @@ struct SignUpView: View {
                         HStack {
                             Image(systemName: "person")
                                 .font(.title2)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("PrimaryColor"))
                                 .frame(width: 40)
                             TextField("Логин", text: $login)
                         }
@@ -52,7 +52,7 @@ struct SignUpView: View {
                         HStack {
                             Image(systemName: "lock")
                                 .font(.title2)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("PrimaryColor"))
                                 .frame(width: 40)
                             SecureField("Пароль", text: $password)
                         }
@@ -62,7 +62,7 @@ struct SignUpView: View {
                     }
                     .padding()
     
-                    PrimaryButton(title: "Зарегистрироваться", onClick: {
+                    PrimaryButton(title: "Продолжить", onClick: {
                         Task {
                             do {
                                 self.user = try await NetworkService.shared.registerUser(name: name, login: login, password: password)

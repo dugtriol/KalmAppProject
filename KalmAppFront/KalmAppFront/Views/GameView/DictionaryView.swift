@@ -13,7 +13,7 @@ struct DictionaryView: View {
     @State var question: Question
     @State private var progress: CGFloat = 0.0
     @State private var currentIndex: Int = 0
-    @State private var score: CGFloat = 0
+    @State private var score: Int = 0
     private let countOfQuestions: Int = 10
     @State var viewState: CGFloat = 0
     @State private var index = 0
@@ -29,54 +29,55 @@ struct DictionaryView: View {
     /// - View Properties
     @Environment(\.dismiss) private var dismiss
     var body: some View {
-        VStack(spacing: 15) {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-            }
-            .hAllign(.leading)
-            
-            /// - Progress Bar
-            GeometryReader {
-                let size = $0.size
-                ZStack(alignment: .leading) {
-                    Rectangle()
-                        .fill(.black.opacity(0.2))
-                    Rectangle()
-                        .fill(Color(.blue))
-                        .frame(width: progress*size.width, alignment: .leading)
+        ZStack {
+            Color("BgColor").edgesIgnoringSafeArea(.all)
+            VStack(spacing: 15) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color("PrimaryColor"))
                 }
-                .clipShape(Capsule())
-            }
-            .frame(height: 20)
-            .padding(.top, 5)
-            
-            /// Questions
-            GeometryReader { geometry in
-                ScrollView(.vertical) {
-                    VStack {
-                        ForEach(0..<countOfQuestions) { index in
-                            if currentIndex == index {
-                                SwipeView()
-                                    .frame(height: geometry.size.height - 10)
-                                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-                                    .padding([.leading, .trailing], 10)
+                .hAllign(.leading)
+                
+                /// - Progress Bar
+                GeometryReader {
+                    let size = $0.size
+                    ZStack(alignment: .leading) {
+                        Rectangle()
+                            .fill(.black.opacity(0.2))
+                        Rectangle()
+                            .fill(Color("PrimaryColor"))
+                            .frame(width: progress*size.width, alignment: .leading)
+                    }
+                    .clipShape(Capsule())
+                }
+                .frame(height: 20)
+                .padding(.top, 5)
+                
+                /// Questions
+                GeometryReader { geometry in
+                    ScrollView(.vertical) {
+                        VStack {
+                            ForEach(0..<countOfQuestions) { index in
+                                
+                                if currentIndex == index {
+                                    SwipeView()
+                                        .frame(height: geometry.size.height - 10)
+                                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                                        .padding([.leading, .trailing], 10)
+                                }
                             }
                         }
                     }
                 }
             }
+            .padding(15)
+            .hAllign(.center)
         }
-        .padding(15)
-        .hAllign(.center)
-        .background {
-            Color(.gray)
-                .ignoresSafeArea()
-        }
+
     }
     
     
@@ -86,7 +87,7 @@ struct DictionaryView: View {
             VStack {
                 ForEach(self.question.options, id: \.self) { option in
                     ZStack {
-                        WordView(option.kalmyk, .gray)
+                        WordView(option.kalmyk, Color("PrimaryColor"))
                             .opacity(question.question.id == option.id && question.tappedAnswer != "" && question.tappedAnswer == option.id ? 0 : 1)
                         WordView(option.kalmyk, .green)
                             .opacity(question.tappedAnswer != "" && question.tappedAnswer == option.id && question.tappedAnswer == question.question.id ? 1 : 0)
@@ -95,9 +96,6 @@ struct DictionaryView: View {
                     }
                     .offset(y: self.viewState)
                     .roundedCorner(20, corners: question.options[0].id == option.id ? [.topLeft, .topRight] : [.bottomLeft, .bottomRight])
-                    //                    .swipeActions(content: edge: .trailing, allowsFullSwipe: true) {
-                    //
-                    //                    }
                     .gesture(
                         DragGesture(minimumDistance: 10, coordinateSpace: .global)
                             .onChanged({ value in
@@ -107,18 +105,16 @@ struct DictionaryView: View {
                                     guard question.tappedAnswer == "" else {return}
                                     self.question.tappedAnswer = question.options[0].id
                                     if question.question.id == self.question.tappedAnswer {
-                                        score += 1.0
+                                        score += 1
                                     }
-                                    print("up \(question.question.kalmyk) \(option.id) \(option.kalmyk) \(question.tappedAnswer)")
                                 }
                                 if value.translation.height > 0 {
                                     /// Disabling Tap if Already Answer was selected
                                     guard question.tappedAnswer == "" else {return}
                                     self.question.tappedAnswer = question.options[1].id
                                     if self.question.question.id == self.question.tappedAnswer {
-                                        score += 1.0
+                                        score += 1
                                     }
-                                    print("down \(self.question.question.kalmyk) \(option.id) \(option.kalmyk) \(question.tappedAnswer)")
                                 }
                                 /// - Swipe down
                             })
@@ -144,20 +140,21 @@ struct DictionaryView: View {
                     .padding([.leading, .trailing], 60)
                     .background{
                         RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            .fill(.white)
+                            .fill(Color("PrimaryColor"))
                     }
                     .fontWeight(.semibold)
+                    .foregroundColor(.white)
             }
         }
         .font(.title3)
         .hAllign(.center)
         .background{
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(.white)
+                .fill(Color("PrimaryColor")).opacity(0.3)
         }
         .fullScreenCover(isPresented: $showScoreCard) {
             /// - Displaying in 100%
-            ScoreCardView(score: score / CGFloat(countOfQuestions) * 100) {
+            ScoreCardView(score: score, countOfQuestions: countOfQuestions) {
                 /// - Closing View
                 dismiss()
             }
@@ -167,21 +164,16 @@ struct DictionaryView: View {
     @ViewBuilder
     func WordView(_ option: String, _ tint: Color) -> some View {
         Text(option)
+            .foregroundColor(.white)
+            .fontWeight(.bold)
+            .font(.system(size: 20))
             .hAllign(.center)
             .vAllign(.center)
-            .background {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(tint.opacity(0.15))
-                    .background {
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(tint.opacity(tint == .white ? 0.15 : 1), lineWidth: 2)
-                    }
-            }
+            .background(tint == Color("PrimaryColor") ? tint.opacity(0.1) : tint.opacity(0.75))
     }
 }
 struct DictionaryView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryList()
-            .environmentObject(ModelData())
+        ContentView()
     }
 }

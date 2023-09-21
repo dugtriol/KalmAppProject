@@ -16,15 +16,15 @@ struct LoginView: View {
                 
                 VStack {
                     Spacer()
-                    Text("Sign In")
+                    Text("Вход")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.bottom, 30)
 
                     HStack {
-                        Image(systemName: "envelope")
+                        Image(systemName: "person")
                             .font(.title2)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color("PrimaryColor"))
                             .frame(width: 40)
                         TextField("Логин", text: $login)
                     }
@@ -35,7 +35,7 @@ struct LoginView: View {
                     HStack {
                         Image(systemName: "lock")
                             .font(.title2)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color("PrimaryColor"))
                             .frame(width: 40)
                         SecureField("Пароль", text: $password)
                     }
@@ -43,14 +43,14 @@ struct LoginView: View {
                     .background(Color.white)
                     .cornerRadius(50)
                     .padding(.bottom, 50)
-                    PrimaryButton(title: "Войти", onClick: {
+                    PrimaryButton(title: "Продолжить", onClick: {
                         Task {
                             do {
                                 self.user = try await NetworkService.shared.auth(login: login, password: password)
                                 showCategoryList.toggle()
                                 
                             } catch {
-                                print("error EmployeeSignInView \(login) \(password)")
+                                print("error LoginView \(login) \(password)")
                             }
                         }
                     })
@@ -61,6 +61,7 @@ struct LoginView: View {
                 HStack(spacing: 6) {
                     Text("Нет аккаунта?")
                         .foregroundColor(Color("TitleTextColor"))
+                        .opacity(0.44)
                     
                     Button(action: {
                         showSignUp.toggle()

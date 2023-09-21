@@ -17,7 +17,7 @@ struct SelectButton: View {
                 .foregroundColor(.white)
                 .background{
                     Rectangle()
-                        .fill(Color(.systemPink))
+                        .fill(Color("PrimaryColor"))
                         .ignoresSafeArea()
                 }
         }
