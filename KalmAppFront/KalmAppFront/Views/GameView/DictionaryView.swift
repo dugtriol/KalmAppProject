@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DictionaryView: View {
     var words: [Word]
+    @State var name: String = "Dictionary"
     @State var question: Question
     @State private var progress: CGFloat = 0.0
     @State private var currentIndex: Int = 0

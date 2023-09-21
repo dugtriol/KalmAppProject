@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var modelData = ModelData()
+    @State private var  showSignUp: Bool = false
+    @State private var  showCategoryList: Bool = false
+    @State var user: User?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            LoginView(showSignUp: $showSignUp, showCategoryList: $showCategoryList, user: $user)
+                .navigationDestination(isPresented: $showSignUp) {
+                    SignUpView(showSignUp: $showSignUp, showCategoryList: $showCategoryList, user: $user)
+                }
+        }
+        .fullScreenCover(isPresented: $showCategoryList, content: {
+            CategoryList()
+                .environmentObject(modelData)
+        })
     }
 }
 

@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct GameFirstView: View {
+    @State var name: String = "Lesson_1"
     @State private var progress: CGFloat = 0.0
     @State private var currentIndex: Int = 0
     @State private var score: CGFloat = 0
     private let countOfQuestions: Int = 10
     @State private var showScoreCard: Bool = false
-    @State private var questionText: String = ""
-    @State private var optionText: String = ""
     @State private var method: Int = 0
     
     var words: [Word]

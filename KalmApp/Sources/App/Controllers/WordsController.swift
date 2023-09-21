@@ -41,7 +41,7 @@ struct WordsController: RouteCollection {
 //        return words
 //    }
     
-    //MARK: CRUD - Retrieve All
+    //MARK: CRUD - Retrieve
     func getAllHandlerByCategory(_ req: Request) async throws -> [Word] {
         guard let category = try await Category.find(req.parameters.get("categoryID"), on: req.db) else {
             throw Abort(.badRequest)

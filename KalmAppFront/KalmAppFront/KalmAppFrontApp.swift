@@ -9,12 +9,9 @@ import SwiftUI
 
 @main
 struct KalmAppFrontApp: App {
-    @StateObject private var modelData = ModelData()
-    
     var body: some Scene {
         WindowGroup {
-            CategoryList()
-                .environmentObject(modelData)
+            ContentView()
         }
     }
 }

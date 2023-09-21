@@ -1,15 +1,12 @@
-//
-//  SignInScreenView.swift
-//  login
-//
-//  Created by Abu Anwar MD Abdullah on 23/4/21.
-//
-
 import SwiftUI
 
-struct SignInScreenView: View {
+struct LoginView: View {
+    @EnvironmentObject private var modelData: ModelData
+    @Binding var showSignUp: Bool
+    @Binding var showCategoryList: Bool
     @State private var login: String = ""
     @State private var password: String = ""
+    @Binding var user: User?
     
     var body: some View {
         ZStack {
@@ -23,7 +20,6 @@ struct SignInScreenView: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.bottom, 30)
-                    
 
                     HStack {
                         Image(systemName: "envelope")
@@ -47,9 +43,18 @@ struct SignInScreenView: View {
                     .background(Color.white)
                     .cornerRadius(50)
                     .padding(.bottom, 50)
-                    PrimaryButton(title: "Email me a signup link")
+                    PrimaryButton(title: "Войти", onClick: {
+                        Task {
+                            do {
+                                self.user = try await NetworkService.shared.auth(login: login, password: password)
+                                showCategoryList.toggle()
+                                
+                            } catch {
+                                print("error EmployeeSignInView \(login) \(password)")
+                            }
+                        }
+                    })
                     Spacer()
-                        
                 }
                 .vAllign(.center)
                 
@@ -57,7 +62,9 @@ struct SignInScreenView: View {
                     Text("Нет аккаунта?")
                         .foregroundColor(Color("TitleTextColor"))
                     
-                    Button(action: {}, label:{
+                    Button(action: {
+                        showSignUp.toggle()
+                    }, label:{
                         Text("Зарегистрируйтесь")
                             .fontWeight(.heavy)
                             .foregroundColor(Color("PrimaryColor"))
@@ -73,28 +80,7 @@ struct SignInScreenView: View {
 
 struct SignInScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInScreenView()
+        ContentView()
     }
 }
 
-
-struct SocalLoginButton: View {
-    var image: Image
-    var text: Text
-    
-    var body: some View {
-        HStack {
-            image
-                .padding(.horizontal)
-            Spacer()
-            text
-                .font(.title2)
-            Spacer()
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color.white)
-        .cornerRadius(50.0)
-        .shadow(color: Color.black.opacity(0.08), radius: 60, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 16)
-    }
-}
