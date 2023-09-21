@@ -1,8 +1,16 @@
-//
-//  File.swift
-//  
-//
-//  Created by Айгуль Манджиева on 21.09.2023.
-//
+import Vapor
+import Fluent
 
-import Foundation
+
+final class UserData: Model, Content {
+    static var schema: String = "data"
+    
+    @ID var id: UUID?
+    @Field(key: "userID") var userId: String
+    @Field(key: "categoryID") var categoryID: String
+    @Field(key: "name") var name: String
+    @Field(key: "correctAnswers") var correctAnswers: Int
+    @Field(key: "allAnswers") var allAnswers: Int
+    init(){}
+    
+}
