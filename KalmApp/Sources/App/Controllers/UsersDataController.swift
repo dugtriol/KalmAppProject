@@ -10,14 +10,14 @@ struct UsersDataController: RouteCollection {
         categoryGroup.delete(":categoryID", use: deleteHandler)
     }
     
-    //MARK: CRUD - Create
-    func createHandler(_ req: Request) async throws ->  {
-        guard let category = try? req.content.decode(Category.self) else {
-            throw Abort(.custom(code: 499, reasonPhrase: "Не удалось декодировать модель Category"))
-        }
-        try await category.save(on: req.db)
-        return category
-    }
+//    //MARK: CRUD - Create
+//    func createHandler(_ req: Request) async throws ->  {
+//        guard let category = try? req.content.decode(Category.self) else {
+//            throw Abort(.custom(code: 499, reasonPhrase: "Не удалось декодировать модель Category"))
+//        }
+//        try await category.save(on: req.db)
+//        return category
+//    }
     
     
     //MARK: CRUD - Retrieve All
