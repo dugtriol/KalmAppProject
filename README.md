@@ -1,2 +1,2 @@
-# KalmAppProject
+# KalmApp
 Проект в рамках курсовой работы
