@@ -22,12 +22,5 @@ struct SelectButton: View {
                 }
         }
         .padding([.bottom, .horizontal], -15)
-        //.vAllign(.bottom)
-    }
-}
-
-struct SelectButton_Previews: PreviewProvider {
-    static var previews: some View {
-        SelectButton(title: "Press me", onClick: {print("SelectButton")})
     }
 }

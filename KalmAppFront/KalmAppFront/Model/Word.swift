@@ -20,7 +20,3 @@ func returnArrayWord(_ words: [Word]) -> [Word] {
     array.shuffle()
     return [words[array[0]], words[array[1]]]
 }
-//
-//enum Category: String, CaseIterable {
-//    case Greeting = "Приветствие"
-//}

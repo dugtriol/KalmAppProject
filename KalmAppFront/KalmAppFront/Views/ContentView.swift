@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 20.09.2023.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -19,7 +12,6 @@ struct ContentView: View {
                 .navigationDestination(isPresented: $showSignUp) {
                     SignUpView(showSignUp: $showSignUp, showCategoryList: $showCategoryList, user: $user)
                 }
-            
         }
         .fullScreenCover(isPresented: $showCategoryList, content: {
             CategoryList(user: $user)

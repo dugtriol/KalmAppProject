@@ -1,10 +1,3 @@
-//
-//  Question.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 19.09.2023.
-//
-
 import SwiftUI
 
 struct Question {

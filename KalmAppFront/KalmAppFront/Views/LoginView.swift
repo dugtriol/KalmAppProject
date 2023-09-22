@@ -7,20 +7,19 @@ struct LoginView: View {
     @State private var login: String = ""
     @State private var password: String = ""
     @Binding var user: User?
+    @State var showAlert: Bool = false
     
     var body: some View {
         ZStack {
             Color("BgColor").edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
-                
                 VStack {
                     Spacer()
                     Text("Вход")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.bottom, 30)
-
                     HStack {
                         Image(systemName: "person")
                             .font(.title2)
@@ -31,7 +30,7 @@ struct LoginView: View {
                     .padding()
                     .background(Color.white)
                     .cornerRadius(50)
-
+                    
                     HStack {
                         Image(systemName: "lock")
                             .font(.title2)
@@ -48,11 +47,14 @@ struct LoginView: View {
                             do {
                                 self.user = try await NetworkService.shared.auth(login: login, password: password)
                                 showCategoryList.toggle()
-                                
                             } catch {
+                                showAlert.toggle()
                                 print("error LoginView \(login) \(password)")
                             }
                         }
+                    })
+                    .alert(isPresented: $showAlert, content:{
+                        Alert(title: Text("Неправильный логин или пароль"))
                     })
                     Spacer()
                 }
@@ -62,7 +64,6 @@ struct LoginView: View {
                     Text("Нет аккаунта?")
                         .foregroundColor(Color("TitleTextColor"))
                         .opacity(0.44)
-                    
                     Button(action: {
                         showSignUp.toggle()
                     }, label:{
@@ -72,16 +73,8 @@ struct LoginView: View {
                     })
                 }
                 .padding(.vertical)
-                
             }
             .padding()
         }
     }
 }
-
-struct SignInScreenView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-

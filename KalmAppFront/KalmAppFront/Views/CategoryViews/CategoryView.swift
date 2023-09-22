@@ -1,17 +1,11 @@
-//
-//  GameHomeView.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 18.09.2023.
-//
-
 import SwiftUI
 
-struct GameHomeView: View {
+struct CategoryView: View {
     @EnvironmentObject private var modelData: ModelData
     var category: Category
     @State private var startQuizz: Bool = false
     @State private var startDictionary: Bool = false
+    @State var userId: String
     
     var body: some View {
         ZStack {
@@ -48,18 +42,16 @@ struct GameHomeView: View {
                                 Text("Словарь")
                                     .font(.subheadline)
                                 Spacer(minLength: 0)
-                                Text("1/18")
+                                Text("\(modelData.userDataDictionary.correctAnswers)/\(modelData.userDataDictionary.allAnswers)")
                             }
                             .padding(.bottom, 15)
                             HStack {
-                                Image(systemName: "star")
-                                Image(systemName: "star")
-                                Image(systemName: "star")
+                                showProgressStars(correctAnswers: modelData.userDataDictionary.correctAnswers, allAnswers: modelData.userDataDictionary.allAnswers)
                                 Spacer(minLength: 0)
                                 Image(systemName: "checkmark.circle")
                             }
-                            .font(.title2)
-                            .padding(.bottom, 15)
+                                .font(.title2)
+                                .padding(.bottom, 15)
                         }
                         .hAllign(.leading)
                         .frame(maxWidth: .infinity)
@@ -71,10 +63,10 @@ struct GameHomeView: View {
                         .clipShape(Rectangle())
                         .cornerRadius(15)
                         
-                    }                    .fullScreenCover(isPresented: $startDictionary) {
-                        DictionaryView(words: modelData.words)
                     }
-                    
+                    .fullScreenCover(isPresented: $startDictionary) {
+                        DictionaryView(words: modelData.words, userID: userId, categoryID: category.id)
+                    }
                     Spacer(minLength: 10)
                     Button {
                         startQuizz.toggle()
@@ -88,18 +80,16 @@ struct GameHomeView: View {
                                 Text("Упражнение")
                                     .font(.subheadline)
                                 Spacer(minLength: 0)
-                                Text("1/18")
+                                Text("\(modelData.userDataLesson_1.correctAnswers)/\(modelData.userDataLesson_1.allAnswers)")
                             }
                             .padding(.bottom, 15)
                             HStack {
-                                Image(systemName: "star")
-                                Image(systemName: "star")
-                                Image(systemName: "star")
+                                showProgressStars(correctAnswers: modelData.userDataLesson_1.correctAnswers, allAnswers: modelData.userDataLesson_1.allAnswers)
                                 Spacer(minLength: 0)
                                 Image(systemName: "checkmark.circle")
                             }
-                            .font(.title2)
-                            .padding(.bottom, 15)
+                                .font(.title2)
+                                .padding(.bottom, 15)
                         }
                         .hAllign(.leading)
                         .frame(maxWidth: .infinity)
@@ -112,7 +102,7 @@ struct GameHomeView: View {
                         .cornerRadius(15)
                     }
                     .fullScreenCover(isPresented: $startQuizz) {
-                        GameFirstView(words: modelData.words)
+                        LessonView(words: modelData.words, userID: userId, categoryID: category.id)
                     }
                 }
                 .padding(.horizontal)
@@ -124,15 +114,21 @@ struct GameHomeView: View {
                     print("error LessonList")
                 }
             }
+            .task {
+                do {
+                    try await modelData.fetchUserData(userID: userId, categoryID: category.id, name: "Dictionary")
+                } catch {
+                    print("error GameHomeView Dictionary")
+                }
+            }
+            .task {
+                do {
+                    try await modelData.fetchUserData(userID: userId, categoryID: category.id, name: "Lesson_1")
+                } catch {
+                    print("error GameHomeView Lesson_1")
+                }
+            }
             .vAllign(.top)
         }
-    }
-}
-
-struct GameHomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        //        GameHomeView(category: Category(id: "", titleRussian: "Russian", titleKalmyk: "Kalmyk", image: "family"))
-        //            .environmentObject(ModelData())
-        ContentView()
     }
 }

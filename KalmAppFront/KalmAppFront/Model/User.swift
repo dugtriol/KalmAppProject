@@ -1,10 +1,3 @@
-//
-//  User.swift
-//  RestaurantFront
-//
-//  Created by Айгуль Манджиева on 20.09.2023.
-//
-
 import Foundation
 
 struct User: Identifiable, Codable {

@@ -1,10 +1,3 @@
-//
-//  NetworkService.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 17.09.2023.
-//
-
 import Foundation
 
 class NetworkService {
@@ -16,7 +9,6 @@ class NetworkService {
         guard let url = URL(string: "\(localhost)\(APIMethod.words.rawValue)\(id)") else {
             throw NetworkError.badURL
         }
-        
         let userResponse = try await URLSession.shared.data(for: URLRequest(url: url))
         let userData = userResponse.0
         
@@ -73,6 +65,32 @@ class NetworkService {
         let user = try decoder.decode(User.self, from: userData)
         return user
     }
+    
+    func getUserData(userID: String, categoryID: String, name: String) async throws -> UserData {
+        guard let url = URL(string: "\(localhost)\(APIMethod.data.rawValue)\(userID.lowercased())/\(categoryID.lowercased())/\(name)") else {
+            throw NetworkError.badURL
+        }
+        let userResponse = try await URLSession.shared.data(for: URLRequest(url: url))
+        let userData = userResponse.0
+        let decoder = JSONDecoder()
+        
+        let data = try decoder.decode(UserData.self, from: userData)
+        return data
+    }
+    
+    func updateUserData(userID: String, categoryID: String, name: String, correctAnswers: Int, allAnswers: Int) async throws {
+        let dto = UserDataUpdate(userID: userID.lowercased(), categoryID: categoryID.lowercased(), name: name, correctAnswers: correctAnswers, allAnswers: allAnswers)
+        guard let url = URL(string: "\(localhost)\(APIMethod.data.rawValue)\(userID.lowercased())/\(categoryID.lowercased())/\(name)") else {
+            throw NetworkError.badURL
+        }
+        var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "PUT"
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(dto)
+        request.httpBody = data
+        _ = try await URLSession.shared.data(for: request)
+    }
 }
 
 enum APIMethod: String {
@@ -80,6 +98,7 @@ enum APIMethod: String {
     case categories = "/categories/"
     case auth = "/users/auth"
     case register = "/users"
+    case data = "/data/"
 }
 
 enum NetworkError: Error {

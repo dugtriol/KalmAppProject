@@ -1,10 +1,3 @@
-//
-//  LessonList.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 17.09.2023.
-//
-
 import SwiftUI
 import Foundation
 
@@ -43,7 +36,7 @@ struct CategoryList: View {
                         ZStack {
                             ForEach (modelData.categories.reversed().indices, id: \.self) { index in
                                 HStack {
-                                    ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom) ) {
+                                    ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
                                         Image(modelData.categories[getId(index)].image)
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
@@ -60,7 +53,6 @@ struct CategoryList: View {
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.white)
                                             }
-                                            
                                             NavigationLink (value: modelData.categories[getId(index)]) {
                                                 Text("Начать")
                                                     .font(.subheadline)
@@ -71,10 +63,8 @@ struct CategoryList: View {
                                                     .background(Color("PrimaryColor"))
                                                     .clipShape(Capsule())
                                             }
-
                                         }
                                         .frame(width: calculateWidth() - 40)
-                                        //.padding(.leading, 10)
                                         .padding(.bottom, 20)
                                     }
                                     .offset(x: (getId(index) - scrolled <= 2 ? CGFloat((getId(index) - scrolled) * 30) : 60))
@@ -86,7 +76,7 @@ struct CategoryList: View {
                                     DragGesture()
                                         .onChanged({ (value) in
                                             withAnimation {
-                                                // disabling drag for last card
+                                                /// -  Disabling drag for last card
                                                 if value.translation.width < 0 && getId(index) != modelData.categories.count - 1 {
                                                     offsets[getId(index)] = value.translation.width
                                                 } else {
@@ -100,7 +90,7 @@ struct CategoryList: View {
                                             withAnimation {
                                                 if value.translation.width < 0 {
                                                     if -value.translation.width > 180 && getId(index) != modelData.categories.count - 1  {
-                                                        // moving view away
+                                                        /// -  Moving view away
                                                         offsets[getId(index)] = -(calculateWidth() + 60)
                                                         scrolled += 1
                                                     }
@@ -108,7 +98,7 @@ struct CategoryList: View {
                                                         offsets[getId(index)] = 0
                                                     }
                                                 } else {
-                                                    // restoring card
+                                                    /// - Restoring card
                                                     if getId(index) > 0 {
                                                         if value.translation.width > 180 {
                                                             offsets[getId(index) - 1] = 0
@@ -124,9 +114,8 @@ struct CategoryList: View {
                             }
                         }
                         .navigationDestination(for: Category.self, destination: { category in
-                            GameHomeView(category: category)
+                            CategoryView(category: category, userId: user!.id)
                         })
-                        
                         .frame(height: UIScreen.main.bounds.height / 1.8)
                         .padding(.top, 25)
                         .padding(.horizontal, 25)
@@ -152,13 +141,13 @@ struct CategoryList: View {
     }
     
     func calculateWidth() -> CGFloat {
-        // horizonatal padding 30
+        /// - Horizonatal padding 30
         let screen = UIScreen.main.bounds.width - 30
         
-        // going to show first three cards
-        // all other will be removed
+        /// -  Going to show first three cards
+        /// - All other will be removed
         
-        // second and third will be removed x axis with 30 value
+        /// - Second and third will be removed x axis with 30 value
         let width = screen - (2 * 30)
         return width
     }
@@ -167,10 +156,3 @@ struct CategoryList: View {
         return modelData.categories.count - index - 1
     }
 }
-
-struct LessonList_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-

@@ -1,10 +1,3 @@
-//
-//  PrimaryButton.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 20.09.2023.
-//
-
 import SwiftUI
 
 struct PrimaryButton: View {
@@ -25,9 +18,3 @@ struct PrimaryButton: View {
         }
     }
 }
-
-//struct PrimaryButton_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PrimaryButton(title: "Title")
-//    }
-//}

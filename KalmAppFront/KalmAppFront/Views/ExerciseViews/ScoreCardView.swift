@@ -1,15 +1,13 @@
-//
-//  ScoreCardView.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 19.09.2023.
-//
-
 import SwiftUI
 
 struct ScoreCardView: View {
+    @EnvironmentObject private var modelData: ModelData
+    @Binding var categoryId: String
+    @Binding var userId: String
+    @Binding var name: String
     var score: Int
     var countOfQuestions: Int
+    
     /// - Moving to Home When This View was Dismissed
     var onDismiss: () -> ()
     @Environment(\.dismiss) private var dismiss
@@ -18,16 +16,11 @@ struct ScoreCardView: View {
             Color("BgColor").edgesIgnoringSafeArea(.all)
             VStack {
                 VStack(spacing: 15) {
-
                     VStack(spacing: 15) {
-                        HStack {
-                            Image(systemName: (CGFloat(score)/CGFloat(countOfQuestions) * 100 < 20) ? "star" : "star.fill")
-                            Image(systemName: CGFloat(score)/CGFloat(countOfQuestions) * 100 < 51 ? "star" : "star.fill")
-                            Image(systemName: CGFloat(score)/CGFloat(countOfQuestions) * 100 < 86 ? "star" : "star.fill")
-                        }
-                        .foregroundColor(Color(.orange))
-                        .font(.system(size: 60))
-                        .padding(.bottom, 40)
+                        showProgressStars(correctAnswers: score, allAnswers: countOfQuestions)
+                            .foregroundColor(Color(.orange))
+                            .font(.system(size: 60))
+                            .padding(.bottom, 40)
                         
                         Text("Задание\nзавершено!")
                             .font(.system(size: 35))
@@ -45,7 +38,6 @@ struct ScoreCardView: View {
                                 Text("Правильные ответы: ")
                                     .padding(.trailing, 30)
                                 Text("\(score)")
-                                    
                             }
                         }
                         .fontWeight(.semibold)
@@ -70,14 +62,15 @@ struct ScoreCardView: View {
                     onDismiss()
                     dismiss()
                 }
+                .task {
+                    do {
+                        try await NetworkService.shared.updateUserData(userID: userId, categoryID: categoryId, name: name, correctAnswers: score, allAnswers: countOfQuestions)
+                    } catch {
+                        print("error ScoreCardView")
+                    }
+                }
             }
             .padding(15)
         }
-    }
-}
-
-struct ScoreCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScoreCardView(score: 8, countOfQuestions: 10, onDismiss: {})
     }
 }

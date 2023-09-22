@@ -1,88 +1,8 @@
-//
-//  DictionaryView.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 20.09.2023.
-//
-
 import SwiftUI
 
-struct DictionaryView: View {
-    var words: [Word]
-    @State var name: String = "Dictionary"
-    @State var question: Question
-    @State private var progress: CGFloat = 0.0
-    @State private var currentIndex: Int = 0
-    @State private var score: Int = 0
-    private let countOfQuestions: Int = 10
-    @State var viewState: CGFloat = 0
-    @State private var index = 0
-    let spacing: CGFloat = 10
-    @State private var showScoreCard: Bool = false
-    
-    init(words: [Word]) {
-        self.words = words
-        self.words.shuffle()
-        _question = State(initialValue: makeQuestion(self.words, 2))
-    }
-    
-    /// - View Properties
-    @Environment(\.dismiss) private var dismiss
-    var body: some View {
-        ZStack {
-            Color("BgColor").edgesIgnoringSafeArea(.all)
-            VStack(spacing: 15) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color("PrimaryColor"))
-                }
-                .hAllign(.leading)
-                
-                /// - Progress Bar
-                GeometryReader {
-                    let size = $0.size
-                    ZStack(alignment: .leading) {
-                        Rectangle()
-                            .fill(.black.opacity(0.2))
-                        Rectangle()
-                            .fill(Color("PrimaryColor"))
-                            .frame(width: progress*size.width, alignment: .leading)
-                    }
-                    .clipShape(Capsule())
-                }
-                .frame(height: 20)
-                .padding(.top, 5)
-                
-                /// Questions
-                GeometryReader { geometry in
-                    ScrollView(.vertical) {
-                        VStack {
-                            ForEach(0..<countOfQuestions) { index in
-                                
-                                if currentIndex == index {
-                                    SwipeView()
-                                        .frame(height: geometry.size.height - 10)
-                                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
-                                        .padding([.leading, .trailing], 10)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            .padding(15)
-            .hAllign(.center)
-        }
-
-    }
-    
-    
+extension DictionaryView {
     @ViewBuilder
-    func SwipeView() -> some View {
+    func SwiperView() -> some View {
         VStack(alignment: .leading, spacing: 15) {
             VStack {
                 ForEach(self.question.options, id: \.self) { option in
@@ -154,26 +74,17 @@ struct DictionaryView: View {
         }
         .fullScreenCover(isPresented: $showScoreCard) {
             /// - Displaying in 100%
-            ScoreCardView(score: score, countOfQuestions: countOfQuestions) {
+            ScoreCardView(categoryId: $categoryID, userId: $userID, name: $name, score: score, countOfQuestions: countOfQuestions) {
                 /// - Closing View
                 dismiss()
             }
         }
-    }
-    
-    @ViewBuilder
-    func WordView(_ option: String, _ tint: Color) -> some View {
-        Text(option)
-            .foregroundColor(.white)
-            .fontWeight(.bold)
-            .font(.system(size: 20))
-            .hAllign(.center)
-            .vAllign(.center)
-            .background(tint == Color("PrimaryColor") ? tint.opacity(0.1) : tint.opacity(0.75))
-    }
-}
-struct DictionaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        .task {
+            do {
+                try await NetworkService.shared.updateUserData(userID: userID, categoryID: categoryID, name: name, correctAnswers: score, allAnswers: countOfQuestions)
+            } catch {
+                print("error ScoreCardView")
+            }
+        }
     }
 }

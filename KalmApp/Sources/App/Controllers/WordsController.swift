@@ -60,6 +60,8 @@ struct WordsController: RouteCollection {
 //        return word
 //    }
     
+    
+    
     //MARK: CRUD - Delete
     func deleteHandler(_ req: Request) async throws -> HTTPStatus {
         guard let word = try await Word.find(req.parameters.get("wordID"), on: req.db) else {

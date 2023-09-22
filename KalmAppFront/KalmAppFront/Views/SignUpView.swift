@@ -1,10 +1,3 @@
-//
-//  SignUpView.swift
-//  KalmAppFront
-//
-//  Created by Айгуль Манджиева on 21.09.2023.
-//
-
 import SwiftUI
 
 struct SignUpView: View {
@@ -14,20 +7,19 @@ struct SignUpView: View {
     @State private var login: String = ""
     @State private var password: String = ""
     @Binding var user: User?
+    @State var showAlert: Bool = false
     
     var body: some View {
         ZStack {
             Color("BgColor").edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
-                
                 VStack {
                     Spacer()
                     Text("Регистрация")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding(.bottom, 30)
-                    
                     VStack {
                         HStack {
                             Image(systemName: "face.smiling")
@@ -69,9 +61,13 @@ struct SignUpView: View {
                                 showCategoryList.toggle()
                                 
                             } catch {
+                                showAlert.toggle()
                                 print("error EmployeeSignInView \(login) \(password)")
                             }
                         }
+                    })
+                    .alert(isPresented: $showAlert, content:{
+                        Alert(title: Text("Этот логин занят, попробуйте другой"))
                     })
                     Spacer()
                 }
@@ -79,11 +75,5 @@ struct SignUpView: View {
             }
             .padding()
         }
-    }
-}
-
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
