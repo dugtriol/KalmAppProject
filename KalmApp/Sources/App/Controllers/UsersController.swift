@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Айгуль Манджиева on 21.09.2023.
-//
-
 import Fluent
 import Vapor
 
@@ -17,6 +10,7 @@ struct UsersController: RouteCollection {
         usersGroup.post("auth", use: authHandler)
     }
     
+    //MARK: CRUD - Create
     func createHandler(_ req: Request) async throws -> User.Public {
         let user = try req.content.decode(User.self)
         user.password = try Bcrypt.hash(user.password)
@@ -24,6 +18,7 @@ struct UsersController: RouteCollection {
         return user.convertToPublic()
     }
     
+    //MARK: CRUD - Retrieve All
     func getAllHandler(_ req: Request) async throws -> [User.Public] {
         let users = try await User.query(on: req.db).all()
         let publics = users.map { user in
@@ -32,6 +27,7 @@ struct UsersController: RouteCollection {
         return publics
     }
     
+    //MARK: CRUD - Retrieve
     func getHandler(_ req: Request) async throws -> User.Public {
         guard let user = try await User.find(req.parameters.get("id"), on: req.db)
         else {
@@ -40,6 +36,7 @@ struct UsersController: RouteCollection {
         return user.convertToPublic()
     }
     
+    //MARK: User Authentication
     func authHandler(_ req: Request) async throws -> User.Public {
         let userDTO = try req.content.decode(AuthUserDTO.self)
         guard let user = try await User

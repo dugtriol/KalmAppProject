@@ -79,12 +79,5 @@ extension DictionaryView {
                 dismiss()
             }
         }
-        .task {
-            do {
-                try await NetworkService.shared.updateUserData(userID: userID, categoryID: categoryID, name: name, correctAnswers: score, allAnswers: countOfQuestions)
-            } catch {
-                print("error ScoreCardView")
-            }
-        }
     }
 }

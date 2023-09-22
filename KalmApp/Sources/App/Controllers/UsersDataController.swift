@@ -7,13 +7,12 @@ struct UsersDataController: RouteCollection {
         dataGroup.get(":userId", ":categoryId", ":nameLesson", use: getHandler)
         dataGroup.post(use: createHandler)
         dataGroup.put(":userId", ":categoryId", ":nameLesson", use: updateHandler)
-        dataGroup.delete(":categoryID", use: deleteHandler)
     }
     
     //MARK: CRUD - Create
     func createHandler(_ req: Request) async throws ->  UserData {
         guard let data = try? req.content.decode(UserData.self) else {
-            throw Abort(.custom(code: 499, reasonPhrase: "Не удалось декодировать модель Category"))
+            throw Abort(.custom(code: 499, reasonPhrase: "Не удалось декодировать модель UserData"))
         }
         try await data.save(on: req.db)
         return data
@@ -29,7 +28,6 @@ struct UsersDataController: RouteCollection {
         else {
             throw Abort(.notFound)
         }
-        
         return data
     }
     
@@ -50,14 +48,5 @@ struct UsersDataController: RouteCollection {
         data.allAnswers = updatedData.allAnswers
         try await data.save(on: req.db)
         return data
-    }
-    
-    //MARK: CRUD - Delete
-    func deleteHandler(_ req: Request) async throws -> HTTPStatus {
-        guard let category = try await Category.find(req.parameters.get("categoryID"), on: req.db) else {
-            throw Abort(.notFound)
-        }
-        try await category.delete(on: req.db)
-        return .ok
     }
 }
