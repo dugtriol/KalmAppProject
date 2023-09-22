@@ -142,9 +142,9 @@
 			isa = PBXGroup;
 			children = (
 				916C83462ABB798E000CC4A4 /* ContentView.swift */,
+				917D6D022ABE337600608B92 /* AuthViews */,
 				91D967482ABE27BD000179EF /* ViewBuilders */,
 				91D967492ABE2815000179EF /* Extensions */,
-				916C833B2ABB6923000CC4A4 /* AuthViews */,
 				913BBA932AB8A2320073110F /* Custom */,
 				913BBA8C2AB8871A0073110F /* CategoryViews */,
 				913BBA922AB88DC80073110F /* ExerciseViews */,
@@ -181,13 +181,13 @@
 			path = Custom;
 			sourceTree = "<group>";
 		};
-		916C833B2ABB6923000CC4A4 /* AuthViews */ = {
+		917D6D022ABE337600608B92 /* AuthViews */ = {
 			isa = PBXGroup;
 			children = (
 				916C833E2ABB6986000CC4A4 /* LoginView.swift */,
 				91E69B112ABC4B55001EB671 /* SignUpView.swift */,
 			);
-			name = AuthViews;
+			path = AuthViews;
 			sourceTree = "<group>";
 		};
 		91D967482ABE27BD000179EF /* ViewBuilders */ = {
