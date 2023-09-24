@@ -9,6 +9,7 @@ struct SignUpView: View {
     @Binding var user: User?
     @State var showAlert: Bool = false
     
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         ZStack {
             Color("BgColor").edgesIgnoringSafeArea(.all)
@@ -58,8 +59,8 @@ struct SignUpView: View {
                         Task {
                             do {
                                 self.user = try await NetworkService.shared.registerUser(name: name, login: login, password: password)
-                                showCategoryList.toggle()
-                                
+//                                showCategoryList.toggle()
+                                dismiss()
                             } catch {
                                 showAlert.toggle()
                                 print("error EmployeeSignInView \(login) \(password)")

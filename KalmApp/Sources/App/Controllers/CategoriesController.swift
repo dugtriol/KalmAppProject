@@ -15,8 +15,6 @@ struct CategoriesController: RouteCollection {
         guard let category = try? req.content.decode(Category.self) else {
             throw Abort(.custom(code: 499, reasonPhrase: "Не удалось декодировать модель Category"))
         }
-        let imagePath = "\(req.application.directory.workingDirectory)" + "Storage/Categories/\(category.image).jpg"
-        category.image = imagePath
         try await category.save(on: req.db)
         return category
     }

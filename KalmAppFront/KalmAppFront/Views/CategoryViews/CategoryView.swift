@@ -118,14 +118,16 @@ struct CategoryView: View {
                 do {
                     try await modelData.fetchUserData(userID: userId, categoryID: category.id, name: "Dictionary")
                 } catch {
-                    print("error GameHomeView Dictionary")
+                    modelData.userDataDictionary.correctAnswers = 0
+                    modelData.userDataDictionary.allAnswers = 10
                 }
             }
             .task {
                 do {
                     try await modelData.fetchUserData(userID: userId, categoryID: category.id, name: "Lesson_1")
                 } catch {
-                    print("error GameHomeView Lesson_1")
+                    modelData.userDataLesson_1.correctAnswers = 0
+                    modelData.userDataLesson_1.allAnswers = 10
                 }
             }
             .vAllign(.top)
