@@ -4,7 +4,7 @@ import Foundation
 struct CategoryList: View {
     @EnvironmentObject private var modelData: ModelData
     @State var index = 0
-    @State var offsets = [CGFloat](repeating: 0, count: 2)
+    @State var offsets = [CGFloat](repeating: 0, count: 3)
     @State var scrolled = 0
     @Binding var user: User?
     
@@ -153,6 +153,7 @@ struct CategoryList: View {
     }
     
     func getId(_ index: Int) -> Int {
+        print(modelData.categories.count - index - 1)
         return modelData.categories.count - index - 1
     }
 }
